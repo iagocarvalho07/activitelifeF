@@ -78,7 +78,6 @@ class _AuthLoginFormState extends State<AuthLoginForm>
                         ),
                       ],
                     ),
-                    const SizedBox(height: 40),
                     Form(
                       key: _formKey,
                       child: Column(
