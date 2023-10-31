@@ -141,7 +141,7 @@ class _AuthLoginFormState extends State<AuthLoginForm>
                                 position: _slideAnimation!,
                                 child: AnimatedOpacity(
                                   opacity: opacityLevel,
-                                  duration: Duration(milliseconds: 1500),
+                                  duration: const Duration(milliseconds: 1500),
                                   child: TextFormField(
                                     key: const ValueKey("Name"),
                                     initialValue: _authForData.name,
@@ -241,7 +241,9 @@ class _AuthLoginFormState extends State<AuthLoginForm>
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       IconButton(
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            Navigator.of(context).pushNamed(AppRoute.ScaffoldScreen);
+                                          },
                                           icon: Image.asset(
                                             googleImage,
                                           )),

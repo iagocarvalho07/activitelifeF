@@ -7,8 +7,17 @@ class AppRoute{
   static const ForgotPasswordScreen = '/ForgotPasswordScreen';
 
   // bottom bar
+  static const ScaffoldScreen = '/ScaffoldScreen';
   static const HomeScreen = '/HomeScreen';
   static const TreinosScreen = '/TreinosScreen';
   static const ProfileScreen = '/ProfileScreen';
+
+
+  // DrawerMenu
+  static const BuyMyCoffe = '/BuyMyCoffe';
+  static const MyWorkoutScreen = '/MyWorkoutScreen';
+  static const NotificationScreen = '/NotificationScreen';
+  static const SettingsScreen = '/SettingsScreen';
+
 
 }
