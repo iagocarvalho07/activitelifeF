@@ -1,5 +1,8 @@
-import 'package:flutter/cupertino.dart';
+
+import 'package:activitelifef/utilits/assets_constants.dart';
+import 'package:activitelifef/utilits/navigation_constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
@@ -9,7 +12,6 @@ class ForgotPasswordScreen extends StatefulWidget {
 }
 
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
-  final String _image = 'lib/assets/imagens/pexelsanastasiashuraeva.jpg';
   final _formKey = GlobalKey<FormState>();
   String emailPas = "";
 
@@ -29,7 +31,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
           child: Opacity(
               opacity: 0.5,
               child: Image.asset(
-                _image,
+                AssetsPath.imageBackGroudAppLoginScreen,
                 fit: BoxFit.cover,
               )),
         ),
@@ -48,7 +50,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       children: [
                         const Text(
                           "Digite seu Email, para Recuperação de senha",
-                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
                         ),
                         Form(
                           key: _formKey,
@@ -74,9 +77,40 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                 child: ElevatedButton(
                                     onPressed: () {
                                       if (_formKey.currentState!.validate()) {
-                                        print(emailPas);
+                                        debugPrint(emailPas);
+                                        showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) =>
+                                                AlertDialog.adaptive(
+                                                  title: Column(
+                                                    children: [
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(8.0),
+                                                        child: SvgPicture.asset(
+                                                          AssetsPath
+                                                              .AlertDialogImage,
+                                                          height: 100,
+                                                        ),
+                                                      ),
+                                                      const Text(
+                                                          "Email Enviado"),
+                                                    ],
+                                                  ),
+                                                  content: const Text(
+                                                      "Check your email adreess, and recover your password"),
+                                                  actions: [
+                                                    TextButton(
+                                                        onPressed: () {
+                                                          Navigator.of(context)
+                                                              .pushNamed(AppRoute
+                                                                  .LoginScreen);
+                                                        },
+                                                        child: const Text("Ok"))
+                                                  ],
+                                                ));
                                       }
-                                      ;
                                     },
                                     child: const Text("Recuperar Senha")),
                               )

@@ -1,5 +1,6 @@
 import 'package:activitelifef/models/auth_form_data.dart';
 import 'package:activitelifef/ui/widgets/auth_login_form.dart';
+import 'package:activitelifef/utilits/assets_constants.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -10,8 +11,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final String _image = 'lib/assets/imagens/pexelsanastasiashuraeva.jpg';
-
   Future<void> _handleSubmit(AuthFormData formData) async {
     try {
       if (formData.islogin) {
@@ -31,7 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Opacity(
               opacity: 0.3,
               child: Image.asset(
-                _image,
+                AssetsPath.imageBackGroudAppLoginScreen,
                 fit: BoxFit.cover,
               ),
             ),

@@ -1,5 +1,6 @@
 import 'package:activitelifef/ui/screens/bottomBarScreens/homeScreen/home_screen.dart';
 import 'package:activitelifef/ui/screens/bottomBarScreens/profileScreen/profile_screen.dart';
+import 'package:activitelifef/ui/screens/bottomBarScreens/rotinasscreen/rotinas_screen.dart';
 import 'package:activitelifef/ui/screens/bottomBarScreens/treinoScreen/exercices_screen.dart';
 import 'package:activitelifef/ui/widgets/drawer_menu.dart';
 import 'package:flutter/material.dart';
@@ -17,10 +18,11 @@ class _ScaffoldScreenState extends State<ScaffoldScreen> {
 
   List screens = const [
     HomeScreen(),
+    RotinasProntasScreen(),
     ExerceciesSceen(),
     ProfileScreen(),
   ];
-  List AppBarName = const ['Home', "Exercicios", "Perfil"];
+  List AppBarName = const ['Home', "Rotinas", "Exercicios", "Perfil"];
 
   @override
   Widget build(BuildContext context) {
@@ -28,8 +30,11 @@ class _ScaffoldScreenState extends State<ScaffoldScreen> {
         appBar: AppBar(
           title: Text(AppBarName[myCurrentIndex]),
           centerTitle: true,
+          actions: [
+            IconButton(onPressed: () {}, icon: const Icon(Icons.exit_to_app))
+          ],
         ),
-        drawer: DrawerMenu(),
+        drawer: const DrawerMenu(),
         body: screens[myCurrentIndex],
         bottomNavigationBar: Padding(
           padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 20),
@@ -53,6 +58,10 @@ class _ScaffoldScreenState extends State<ScaffoldScreen> {
               GButton(
                 icon: Icons.home,
                 text: "Home",
+              ),
+              GButton(
+                icon: Icons.format_list_numbered_rounded,
+                text: "Rotinas",
               ),
               GButton(
                 icon: Icons.sports_gymnastics,

@@ -1,3 +1,4 @@
+import 'package:activitelifef/utilits/assets_constants.dart';
 import 'package:activitelifef/utilits/navigation_constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -41,7 +42,7 @@ class _SplashScreenState extends State<SplashScreen> {
               width: double.infinity,
               height: double.infinity,
               child: Image.asset(
-                image,
+                AssetsPath.imageBackGroudApp,
                 fit: BoxFit.cover,
               ),
             ),
