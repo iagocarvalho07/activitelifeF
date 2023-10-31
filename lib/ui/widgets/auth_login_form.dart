@@ -11,13 +11,22 @@ class AuthLoginForm extends StatefulWidget {
   State<AuthLoginForm> createState() => _AuthLoginFormState();
 }
 
-class _AuthLoginFormState extends State<AuthLoginForm> {
+class _AuthLoginFormState extends State<AuthLoginForm>
+    with TickerProviderStateMixin {
   final googleImage = 'lib/assets/imagens/icons8-google-48.png';
   final facebookImage = 'lib/assets/imagens/icons8-facebook-48.png';
 
   final _formKey = GlobalKey<FormState>();
   final _myFormControler = TextEditingController();
   final _authForData = AuthFormData();
+
+  double opacityLevel = 0.0;
+  double opacityLevelLogin = 1.0;
+
+  void _changeOpacity() {
+    setState(() => opacityLevel = opacityLevel == 0 ? 1.0 : 0.0);
+    setState(() => opacityLevelLogin = opacityLevelLogin == 0 ? 1.0 : 0.0);
+  }
 
   @override
   void dispose() {
@@ -74,8 +83,11 @@ class _AuthLoginFormState extends State<AuthLoginForm> {
                       key: _formKey,
                       child: Column(
                         children: [
-                          if (_authForData.isSingUp)
-                            TextFormField(
+                          // if (_authForData.isSingUp)
+                          AnimatedOpacity(
+                            opacity: opacityLevel,
+                            duration: Duration(seconds: 1),
+                            child: TextFormField(
                               key: const ValueKey("Name"),
                               initialValue: _authForData.name,
                               onChanged: (name) => _authForData.name = name,
@@ -89,6 +101,7 @@ class _AuthLoginFormState extends State<AuthLoginForm> {
                                 return null;
                               },
                             ),
+                          ),
                           TextFormField(
                             decoration:
                                 const InputDecoration(labelText: 'E-mail'),
@@ -152,12 +165,14 @@ class _AuthLoginFormState extends State<AuthLoginForm> {
                               ),
                             ),
                           ),
-                          if (_authForData.islogin)
-                            Column(
+                          // if (_authForData.islogin)
+                          AnimatedOpacity(
+                            opacity: opacityLevelLogin,
+                            duration: Duration(seconds: 1),
+                            child: Column(
                               children: [
                                 const Text("or Login with"),
                                 Row(
-
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     IconButton(
@@ -171,7 +186,8 @@ class _AuthLoginFormState extends State<AuthLoginForm> {
                                   ],
                                 )
                               ],
-                            )
+                            ),
+                          )
                         ],
                       ),
                     ),
@@ -180,9 +196,10 @@ class _AuthLoginFormState extends State<AuthLoginForm> {
                       children: [
                         TextButton(
                             onPressed: () {
-                              setState(() {
-                                _authForData.toogleAuthMode();
-                              });
+                              _changeOpacity();
+                              setState(
+                                () => _authForData.toogleAuthMode(),
+                              );
                             },
                             child: Text(
                                 _authForData.islogin ? "Criar Conta" : "Login"))
