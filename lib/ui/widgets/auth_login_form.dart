@@ -23,6 +23,10 @@ class _AuthLoginFormState extends State<AuthLoginForm>
   double opacityLevel = 0.0;
   double opacityLevelLogin = 1.0;
 
+  AnimationController? _controller;
+  Animation<double>? _opacityAnimation;
+  Animation<Offset>? _slideAnimation;
+
   void _changeOpacity() {
     setState(() => opacityLevel = opacityLevel == 0 ? 1.0 : 0.0);
     setState(() => opacityLevelLogin = opacityLevelLogin == 0 ? 1.0 : 0.0);
@@ -33,6 +37,48 @@ class _AuthLoginFormState extends State<AuthLoginForm>
     // Clean up the controller when the widget is disposed.
     _myFormControler.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(
+        milliseconds: 300,
+      ),
+    );
+
+    _opacityAnimation = Tween(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(
+      CurvedAnimation(
+        parent: _controller!,
+        curve: Curves.linear,
+      ),
+    );
+
+    _slideAnimation = Tween<Offset>(
+      begin: const Offset(0, -1.5),
+      end: const Offset(0, 0),
+    ).animate(
+      CurvedAnimation(
+        parent: _controller!,
+        curve: Curves.linear,
+      ),
+    );
+  }
+
+  void _switchAuthMode() {
+    setState(() {
+      if (_authForData.islogin) {
+        _controller?.forward();
+      } else {
+        _controller?.reverse();
+      }
+    });
   }
 
   @override
@@ -82,23 +128,37 @@ class _AuthLoginFormState extends State<AuthLoginForm>
                       key: _formKey,
                       child: Column(
                         children: [
-                          // if (_authForData.isSingUp)
-                          AnimatedOpacity(
-                            opacity: opacityLevel,
-                            duration: Duration(seconds: 1),
-                            child: TextFormField(
-                              key: const ValueKey("Name"),
-                              initialValue: _authForData.name,
-                              onChanged: (name) => _authForData.name = name,
-                              decoration:
-                                  const InputDecoration(labelText: 'Nome'),
-                              validator: (_name) {
-                                final name = _name ?? '';
-                                if (name.trim().length < 3) {
-                                  return 'O nome deve possuir 3 ou mais caracteres';
-                                }
-                                return null;
-                              },
+                          AnimatedContainer(
+                            constraints: BoxConstraints(
+                              minHeight: _authForData.islogin ? 0 : 60,
+                              maxHeight: _authForData.islogin ? 0 : 120,
+                            ),
+                            duration: const Duration(seconds: 1),
+                            curve: Curves.linear,
+                            child: FadeTransition(
+                              opacity: _opacityAnimation!,
+                              child: SlideTransition(
+                                position: _slideAnimation!,
+                                child: AnimatedOpacity(
+                                  opacity: opacityLevel,
+                                  duration: Duration(milliseconds: 1500),
+                                  child: TextFormField(
+                                    key: const ValueKey("Name"),
+                                    initialValue: _authForData.name,
+                                    onChanged: (name) =>
+                                        _authForData.name = name,
+                                    decoration: const InputDecoration(
+                                        labelText: 'Nome'),
+                                    validator: (_name) {
+                                      final name = _name ?? '';
+                                      if (name.trim().length < 3) {
+                                        return 'O nome deve possuir 3 ou mais caracteres';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
                           TextFormField(
@@ -133,17 +193,18 @@ class _AuthLoginFormState extends State<AuthLoginForm>
                               return null;
                             },
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              TextButton(
-                                  onPressed: () {
-                                    Navigator.of(context).pushNamed(
-                                        AppRoute.ForgotPasswordScreen);
-                                  },
-                                  child: const Text("Esqueci senha")),
-                            ],
-                          ),
+                          if (_authForData.islogin)
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pushNamed(
+                                          AppRoute.ForgotPasswordScreen);
+                                    },
+                                    child: const Text("Esqueci senha")),
+                              ],
+                            ),
                           Padding(
                             padding: const EdgeInsets.all(18),
                             child: ElevatedButton(
@@ -164,27 +225,33 @@ class _AuthLoginFormState extends State<AuthLoginForm>
                               ),
                             ),
                           ),
-                          // if (_authForData.islogin)
-                          AnimatedOpacity(
-                            opacity: opacityLevelLogin,
-                            duration: Duration(seconds: 1),
-                            child: Column(
-                              children: [
-                                const Text("or Login with"),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    IconButton(
-                                        onPressed: () {},
-                                        icon: Image.asset(
-                                          googleImage,
-                                        )),
-                                    IconButton(
-                                        onPressed: () {},
-                                        icon: Image.asset(facebookImage)),
-                                  ],
-                                )
-                              ],
+                          AnimatedContainer(
+                            constraints: BoxConstraints(
+                              minHeight: _authForData.islogin ? 60 : 0,
+                              maxHeight: _authForData.islogin ? 90 : 0,
+                            ),
+                            duration: const Duration(seconds: 1),
+                            child: AnimatedOpacity(
+                              opacity: opacityLevelLogin,
+                              duration: const Duration(milliseconds: 2000),
+                              child: Column(
+                                children: [
+                                  const Text("or Login with"),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      IconButton(
+                                          onPressed: () {},
+                                          icon: Image.asset(
+                                            googleImage,
+                                          )),
+                                      IconButton(
+                                          onPressed: () {},
+                                          icon: Image.asset(facebookImage)),
+                                    ],
+                                  )
+                                ],
+                              ),
                             ),
                           )
                         ],
@@ -195,6 +262,7 @@ class _AuthLoginFormState extends State<AuthLoginForm>
                       children: [
                         TextButton(
                             onPressed: () {
+                              _switchAuthMode();
                               _changeOpacity();
                               setState(
                                 () => _authForData.toogleAuthMode(),

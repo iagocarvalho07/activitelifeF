@@ -39,23 +39,26 @@ class _LoginScreenState extends State<LoginScreen> {
           Container(
             width: double.infinity,
             height: double.infinity,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 40.0),
-                  child: Text(
-                    "Active Life",
-                    style: TextStyle(
-                        color: Colors.orange[700],
-                        fontWeight: FontWeight.bold,
-                        fontSize: 48),
+            child: SingleChildScrollView(
+              reverse: true,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 40.0),
+                    child: Text(
+                      "Active Life",
+                      style: TextStyle(
+                          color: Colors.orange[700],
+                          fontWeight: FontWeight.bold,
+                          fontSize: 48),
+                    ),
                   ),
-                ),
-                AuthLoginForm(
-                  onSubmit: _handleSubmit,
-                ),
-              ],
+                  AuthLoginForm(
+                    onSubmit: _handleSubmit,
+                  ),
+                ],
+              ),
             ),
           ),
         ],
