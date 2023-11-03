@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "64622475220",
+    "project_id": "activelifyflutter",
+    "storage_bucket": "activelifyflutter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:64622475220:android:8284c4c42edb5d14d60841",
+        "android_client_info": {
+          "package_name": "com.iagocarvalho.activitelifef"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "64622475220-6ruail76lfahie5l05pvqojcfp0h0k9g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0JsHttrGkiuL9sdRU5LAcn2vfQf205n4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "64622475220-6ruail76lfahie5l05pvqojcfp0h0k9g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

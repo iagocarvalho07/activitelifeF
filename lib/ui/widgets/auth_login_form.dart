@@ -1,6 +1,7 @@
+import 'package:activitelifef/utilits/assets_constants.dart';
 import 'package:activitelifef/utilits/navigation_constants.dart';
-import 'package:activitelifef/models/auth_form_data.dart';
 import 'package:flutter/material.dart';
+import '../../data/models/auth_form_data.dart';
 
 class AuthLoginForm extends StatefulWidget {
   final void Function(AuthFormData) onSubmit;
@@ -13,12 +14,10 @@ class AuthLoginForm extends StatefulWidget {
 
 class _AuthLoginFormState extends State<AuthLoginForm>
     with TickerProviderStateMixin {
-  final googleImage = 'lib/assets/imagens/icons8-google-48.png';
-  final facebookImage = 'lib/assets/imagens/icons8-facebook-48.png';
-
   final _formKey = GlobalKey<FormState>();
   final _myFormControler = TextEditingController();
   final _authForData = AuthFormData();
+  bool isCheked = false;
 
   double opacityLevel = 0.0;
   double opacityLevelLogin = 1.0;
@@ -85,201 +84,237 @@ class _AuthLoginFormState extends State<AuthLoginForm>
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Card(
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(30),
-                  topRight: Radius.circular(30),
-                ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Card(
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30),
+                topRight: Radius.circular(30),
               ),
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Column(
-                  children: [
-                    const Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Column(
+                children: [
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Welcome",
+                        style: TextStyle(
+                            color: Colors.orange,
+                            fontSize: 32,
+                            fontWeight: FontWeight.w500),
+                      ),
+                    ],
+                  ),
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Please login with your information",
+                        style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500),
+                      ),
+                    ],
+                  ),
+                  Form(
+                    key: _formKey,
+                    child: Column(
                       children: [
-                        Text(
-                          "Welcome",
-                          style: TextStyle(
-                              color: Colors.orange,
-                              fontSize: 32,
-                              fontWeight: FontWeight.w500),
-                        ),
-                      ],
-                    ),
-                    const Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Please login with your information",
-                          style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500),
-                        ),
-                      ],
-                    ),
-                    Form(
-                      key: _formKey,
-                      child: Column(
-                        children: [
-                          AnimatedContainer(
-                            constraints: BoxConstraints(
-                              minHeight: _authForData.islogin ? 0 : 60,
-                              maxHeight: _authForData.islogin ? 0 : 120,
-                            ),
-                            duration: const Duration(seconds: 1),
-                            curve: Curves.linear,
-                            child: FadeTransition(
-                              opacity: _opacityAnimation!,
-                              child: SlideTransition(
-                                position: _slideAnimation!,
-                                child: AnimatedOpacity(
-                                  opacity: opacityLevel,
-                                  duration: const Duration(milliseconds: 1500),
-                                  child: TextFormField(
-                                    key: const ValueKey("Name"),
-                                    initialValue: _authForData.name,
-                                    onChanged: (name) =>
-                                        _authForData.name = name,
-                                    decoration: const InputDecoration(
-                                        labelText: 'Nome'),
-                                    validator: (_name) {
-                                      final name = _name ?? '';
-                                      if (name.trim().length < 3) {
-                                        return 'O nome deve possuir 3 ou mais caracteres';
-                                      }
-                                      return null;
-                                    },
-                                  ),
+                        AnimatedContainer(
+                          constraints: BoxConstraints(
+                            minHeight: _authForData.islogin ? 0 : 60,
+                            maxHeight: _authForData.islogin ? 0 : 120,
+                          ),
+                          duration: const Duration(seconds: 1),
+                          curve: Curves.linear,
+                          child: FadeTransition(
+                            opacity: _opacityAnimation!,
+                            child: SlideTransition(
+                              position: _slideAnimation!,
+                              child: AnimatedOpacity(
+                                opacity: opacityLevel,
+                                duration: const Duration(milliseconds: 1500),
+                                child: TextFormField(
+                                  key: const ValueKey("Name"),
+                                  initialValue: _authForData.name,
+                                  onChanged: (name) =>
+                                      _authForData.name = name,
+                                  decoration: const InputDecoration(
+                                      labelText: 'Nome'),
+                                  validator: (_name) {
+                                    final name = _name ?? '';
+                                    if (name.trim().length < 3) {
+                                      return 'O nome deve possuir 3 ou mais caracteres';
+                                    }
+                                    return null;
+                                  },
                                 ),
                               ),
                             ),
                           ),
-                          TextFormField(
-                            decoration:
-                                const InputDecoration(labelText: 'E-mail'),
-                            initialValue: _authForData.email,
-                            onChanged: (email) =>
-                                _authForData.email = email.trim(),
-                            keyboardType: TextInputType.emailAddress,
-                            validator: (_email) {
-                              final email = _email ?? '';
-                              if (email.trim().isEmpty ||
-                                  !email.contains('@')) {
-                                return 'Informe um e-mail válido.';
-                              }
-                              return null;
-                            },
-                          ),
-                          TextFormField(
-                            decoration:
-                                const InputDecoration(labelText: 'Senha'),
-                            initialValue: _authForData.password,
-                            onChanged: (password) =>
-                                _authForData.password = password,
-                            keyboardType: TextInputType.emailAddress,
-                            obscureText: true,
-                            validator: (_password) {
-                              final password = _password ?? '';
-                              if (password.isEmpty || password.length < 6) {
-                                return 'A senha deve Possuir 6 ou + Caracteres';
-                              }
-                              return null;
-                            },
-                          ),
-                          if (_authForData.islogin)
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pushNamed(
-                                          AppRoute.ForgotPasswordScreen);
-                                    },
-                                    child: const Text("Esqueci senha")),
-                              ],
-                            ),
-                          Padding(
-                            padding: const EdgeInsets.all(18),
-                            child: ElevatedButton(
-                              onPressed: () {
-                                if (_formKey.currentState!.validate()) {
-                                  Navigator.of(context)
-                                      .pushNamed(AppRoute.ForgotPasswordScreen);
-                                }
-                              },
-                              style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.orange[100],
-                                  shape: const StadiumBorder(),
-                                  shadowColor: Colors.black,
-                                  minimumSize: const Size.fromHeight(60)),
-                              child: Text(
-                                _authForData.islogin ? "Login" : "Criar Conta",
-                                style: const TextStyle(fontSize: 20),
-                              ),
-                            ),
+                        ),
+                        TextFormField(
+                          decoration:
+                              const InputDecoration(labelText: 'E-mail'),
+                          initialValue: _authForData.email,
+                          onChanged: (email) =>
+                              _authForData.email = email.trim(),
+                          keyboardType: TextInputType.emailAddress,
+                          validator: (_email) {
+                            final email = _email ?? '';
+                            if (email.trim().isEmpty ||
+                                !email.contains('@')) {
+                              return 'Informe um e-mail válido.';
+                            }
+                            return null;
+                          },
+                        ),
+                        TextFormField(
+                          decoration:
+                              const InputDecoration(labelText: 'Senha'),
+                          initialValue: _authForData.password,
+                          onChanged: (password) =>
+                              _authForData.password = password,
+                          keyboardType: TextInputType.emailAddress,
+                          obscureText: true,
+                          validator: (_password) {
+                            final password = _password ?? '';
+                            if (password.isEmpty || password.length < 6) {
+                              return 'A senha deve Possuir 6 ou + Caracteres';
+                            }
+                            return null;
+                          },
+                        ),
+                        if (_authForData.islogin)
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pushNamed(
+                                        AppRoute.ForgotPasswordScreen);
+                                  },
+                                  child: const Text("Esqueci senha")),
+                            ],
                           ),
                           AnimatedContainer(
+                            duration: const Duration(seconds: 2),
                             constraints: BoxConstraints(
-                              minHeight: _authForData.islogin ? 60 : 0,
-                              maxHeight: _authForData.islogin ? 90 : 0,
+                              minHeight: _authForData.islogin ? 0 : 60,
+                              maxHeight: _authForData.islogin ? 0 : 100,
                             ),
-                            duration: const Duration(seconds: 1),
                             child: AnimatedOpacity(
-                              opacity: opacityLevelLogin,
-                              duration: const Duration(milliseconds: 2000),
+                              opacity: opacityLevel,
+                              duration: const Duration(seconds: 2),
                               child: Column(
                                 children: [
-                                  const Text("or Login with"),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     children: [
-                                      IconButton(
-                                          onPressed: () {
-                                            Navigator.of(context).pushNamed(AppRoute.ScaffoldScreen);
-                                          },
-                                          icon: Image.asset(
-                                            googleImage,
-                                          )),
-                                      IconButton(
-                                          onPressed: () {},
-                                          icon: Image.asset(facebookImage)),
+                                      Checkbox(
+                                          value: isCheked,
+                                          onChanged: (bool? value) {
+                                            setState(() {
+                                              isCheked = value!;
+                                            });
+                                          }),
+                                      const Column(
+                                        children: [
+                                          Text(
+                                              "Li e estou de acordo com os Termos de uso"),
+                                        ],
+                                      )
                                     ],
-                                  )
+                                  ),
+                                  TextButton(
+                                    onPressed: () {},
+                                    child: const Text(" Politica de privacidade"),
+                                  ),
                                 ],
                               ),
                             ),
-                          )
-                        ],
-                      ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        TextButton(
-                            onPressed: () {
-                              _switchAuthMode();
-                              _changeOpacity();
-                              setState(
-                                () => _authForData.toogleAuthMode(),
-                              );
-                            },
-                            child: Text(
-                                _authForData.islogin ? "Criar Conta" : "Login"))
+                          ),
+                        ElevatedButton(
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              Navigator.of(context)
+                                  .pushNamed(AppRoute.ForgotPasswordScreen);
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.orange[100],
+                              shape: const StadiumBorder(),
+                              shadowColor: Colors.black,
+                              minimumSize: const Size.fromHeight(60)),
+                          child: Text(
+                            _authForData.islogin ? "Login" : "Criar Conta",
+                            style: const TextStyle(fontSize: 20),
+                          ),
+                        ),
+                        AnimatedContainer(
+                          constraints: BoxConstraints(
+                            minHeight: _authForData.islogin ? 60 : 0,
+                            maxHeight: _authForData.islogin ? 90 : 0,
+                          ),
+                          duration: const Duration(seconds: 1),
+                          child: AnimatedOpacity(
+                            opacity: opacityLevelLogin,
+                            duration: const Duration(milliseconds: 2000),
+                            child: Column(
+                              children: [
+                                const Text("or Login with"),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    IconButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pushNamed(
+                                              AppRoute.ScaffoldScreen);
+                                        },
+                                        icon: Image.asset(
+                                          AssetsPath.googleImage,
+                                        )),
+                                    IconButton(
+                                        onPressed: () {},
+                                        icon: Image.asset(
+                                            AssetsPath.facebookImage)),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                        )
                       ],
                     ),
-                  ],
-                ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      TextButton(
+                          onPressed: () {
+                            _switchAuthMode();
+                            _changeOpacity();
+                            setState(
+                              () => _authForData.toogleAuthMode(),
+                            );
+                          },
+                          child: Text(
+                              _authForData.islogin ? "Criar Conta" : "Login"))
+                    ],
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

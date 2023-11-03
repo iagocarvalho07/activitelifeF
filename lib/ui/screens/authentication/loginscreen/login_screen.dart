@@ -1,7 +1,8 @@
-import 'package:activitelifef/models/auth_form_data.dart';
 import 'package:activitelifef/ui/widgets/auth_login_form.dart';
 import 'package:activitelifef/utilits/assets_constants.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../data/models/auth_form_data.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

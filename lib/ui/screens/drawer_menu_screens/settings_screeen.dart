@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import '../../widgets/drawer_menu.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -41,122 +40,151 @@ class _SettingsScreenState extends State<SettingsScreen> {
 Widget SettingsChanges(BuildContext context) => Column(
       children: [
         ListTile(
-          leading: Icon(Icons.person_pin),
+          leading: const Icon(Icons.person_pin),
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [Text("Nome"), Text("UserName")],
           ),
-          trailing: Icon(Icons.arrow_forward_outlined),
         ),
         ListTile(
-          leading: Icon(Icons.cake),
+          onTap: () => buildShowModalPerfilBottom(context),
+          leading: const Icon(Icons.cake),
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [Text("Idade"), Text("userIdade")],
           ),
-          trailing: Icon(Icons.arrow_forward_outlined),
+          trailing: const Icon(Icons.arrow_forward_outlined),
         ),
         ListTile(
-          leading: Icon(Icons.transgender),
+          onTap: () {},
+          leading: const Icon(Icons.transgender),
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [Text("Gênero"), Text("UserGender")],
           ),
-          trailing: Icon(Icons.arrow_forward_outlined),
+          trailing: const Icon(Icons.arrow_forward_outlined),
         ),
         ListTile(
-          leading: Icon(Icons.height),
+          onTap: () {},
+          leading: const Icon(Icons.height),
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [Text("Altura"), Text("UserHeigth")],
           ),
-          trailing: Icon(Icons.arrow_forward_outlined),
+          trailing: const Icon(Icons.arrow_forward_outlined),
         ),
         ListTile(
-          leading: Icon(Icons.line_weight),
+          onTap: () {},
+          leading: const Icon(Icons.line_weight),
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [Text("Peso"), Text("UserPESO")],
           ),
-          trailing: Icon(Icons.arrow_forward_outlined),
+          trailing: const Icon(Icons.arrow_forward_outlined),
         ),
         ListTile(
-          leading: Icon(Icons.translate),
+          onTap: () {},
+          leading: const Icon(Icons.translate),
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [Text("Idioma"), Text("SelectIdioma")],
           ),
-          trailing: Icon(Icons.arrow_forward_outlined),
+          trailing: const Icon(Icons.arrow_forward_outlined),
         ),
-        Divider(
+        const Divider(
           thickness: 1.0,
         ),
-        Text("Configurações de treino"),
+        const Text("Configurações de treino"),
         ListTile(
-          leading: Icon(Icons.timer),
+          onTap: () {},
+          leading: const Icon(Icons.timer),
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [Text("Tempo de Treino"), Text("45 minutos")],
           ),
-          trailing: Icon(Icons.arrow_forward_outlined),
+          trailing: const Icon(Icons.arrow_forward_outlined),
         ),
         ListTile(
-          leading: Icon(Icons.insights),
+          onTap: () {},
+          leading: const Icon(Icons.insights),
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [Text("Experiencia"), Text("Avançado")],
           ),
-          trailing: Icon(Icons.arrow_forward_outlined),
+          trailing: const Icon(Icons.arrow_forward_outlined),
         ),
         ListTile(
-          leading: Icon(Icons.timelapse),
+          onTap: () {},
+          leading: const Icon(Icons.timelapse),
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [Text("Frequencia de treinos"), Text("5x/sem")],
           ),
-          trailing: Icon(Icons.arrow_forward_outlined),
+          trailing: const Icon(Icons.arrow_forward_outlined),
         ),
         ListTile(
-          leading: Icon(Icons.check_circle),
+          onTap: () {},
+          leading: const Icon(Icons.check_circle),
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [Text("Objetivo"), Text("Ganho de massa")],
           ),
-          trailing: Icon(Icons.arrow_forward_outlined),
+          trailing: const Icon(Icons.arrow_forward_outlined),
         ),
-        Divider(thickness: 1.0),
-        Text("Ajude-nos"),
+        const Divider(thickness: 1.0),
+        const Text("Ajude-nos"),
         ListTile(
-          leading: Icon(Icons.star),
+          onTap: () {},
+          leading: const Icon(Icons.star),
           title: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [Text("Seja Pro")],
           ),
-          trailing: Icon(Icons.arrow_forward_outlined),
+          trailing: const Icon(Icons.arrow_forward_outlined),
         ),
         ListTile(
-          leading: Icon(Icons.send_rounded),
+          onTap: () {},
+          leading: const Icon(Icons.send_rounded),
           title: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [Text("Avalie-nos")],
           ),
-          trailing: Icon(Icons.arrow_forward_outlined),
+          trailing: const Icon(Icons.arrow_forward_outlined),
         ),
         ListTile(
-          leading: Icon(Icons.document_scanner_sharp),
+          onTap: () {},
+          leading: const Icon(Icons.document_scanner_sharp),
           title: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [Text("Termos de Uso")],
           ),
-          trailing: Icon(Icons.arrow_forward_outlined),
+          trailing: const Icon(Icons.arrow_forward_outlined),
         ),
         ListTile(
-          leading: Icon(Icons.handshake),
+          onTap: () {},
+          leading: const Icon(Icons.handshake),
           title: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [Text("Politica de Privacidade")],
           ),
-          trailing: Icon(Icons.arrow_forward_outlined),
+          trailing: const Icon(Icons.arrow_forward_outlined),
         ),
       ],
     );
+
+Future buildShowModalPerfilBottom(BuildContext context,) => showModalBottomSheet(
+    showDragHandle: true,
+    context: context,
+    builder: (BuildContext context) => Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: SizedBox(
+            child: Center(
+              child: Column(
+                children: [
+                  Text("data")
+
+                ],
+              ),
+            ),
+          ),
+        ));

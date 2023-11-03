@@ -1,3 +1,4 @@
+import 'package:activitelifef/firebase_options.dart';
 import 'package:activitelifef/ui/screens/authentication/createuserscreen/creat_user_screeen.dart';
 import 'package:activitelifef/ui/screens/authentication/forgtpassword/forgot_password_screen.dart';
 import 'package:activitelifef/ui/screens/authentication/loginscreen/login_screen.dart';
@@ -8,9 +9,14 @@ import 'package:activitelifef/ui/screens/drawer_menu_screens/my_workout_screen.d
 import 'package:activitelifef/ui/screens/drawer_menu_screens/notification_screen.dart';
 import 'package:activitelifef/ui/screens/drawer_menu_screens/settings_screeen.dart';
 import 'package:activitelifef/utilits/navigation_constants.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
