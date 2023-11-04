@@ -1,4 +1,4 @@
-import 'package:activitelifef/data/respostiroty_abstract.dart';
+import 'package:activitelifef/data/repositorys/respostiroty_abstract.dart';
 import 'package:activitelifef/ui/screens/bottomBarScreens/homeScreen/home_screen.dart';
 import 'package:activitelifef/ui/screens/bottomBarScreens/profileScreen/profile_screen.dart';
 import 'package:activitelifef/ui/screens/bottomBarScreens/rotinasscreen/rotinas_screen.dart';

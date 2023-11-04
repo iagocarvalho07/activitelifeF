@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../../data/models/auth_form_data.dart';
-import '../../../../data/respostiroty_abstract.dart';
+import '../../../../data/repositorys/respostiroty_abstract.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

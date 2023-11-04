@@ -1,4 +1,4 @@
-import 'package:activitelifef/domain/repository_implementation.dart';
+import 'package:activitelifef/domain/repositorys/repository_implementation.dart';
 
 abstract class RepositoryAuthenticatonWithFireBase {
   Future<dynamic> LoginWithEmailAndPassword(String email, String Password) async {}
