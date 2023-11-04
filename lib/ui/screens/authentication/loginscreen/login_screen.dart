@@ -1,8 +1,12 @@
+import 'package:activitelifef/data/expections/firebase_auth_execption.dart';
 import 'package:activitelifef/ui/widgets/auth_login_form.dart';
 import 'package:activitelifef/utilits/assets_constants.dart';
+import 'package:activitelifef/utilits/navigation_constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../../../../data/models/auth_form_data.dart';
+import '../../../../data/respostiroty_abstract.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -12,11 +16,30 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  Future<void> _handleSubmit(AuthFormData formData) async {
-    try {
-      if (formData.islogin) {
-      } else {}
-    } catch (error) {}
+  _handleSubmit(AuthFormData formData) async {
+    if (formData.islogin) {
+      final statusLogin = await RepositoryAuthenticatonWithFireBase()
+          .LoginWithEmailAndPassword(formData.email, formData.password);
+      if (statusLogin == AuthResultStatus.successful) {
+        Navigator.of(context).pushNamed(AppRoute.ScaffoldScreen);
+      } else {
+        final errorMsgL =
+            AuthExceptionHandler.generateExceptionMessage(statusLogin);
+        if (errorMsgL != null) {
+          return buildAlertDialog(context, errorMsgL);
+        }
+      }
+    } else {
+      final status = await RepositoryAuthenticatonWithFireBase()
+          .CreatUserWithEmailAndPassword(
+              formData.name, formData.email, formData.password);
+      if (status == AuthResultStatus.successful) {
+        Navigator.of(context).pushNamed(AppRoute.ScaffoldScreen);
+      } else {
+        final errorMsg = AuthExceptionHandler.generateExceptionMessage(status);
+        buildAlertDialog(context, errorMsg);
+      }
+    }
   }
 
   @override
@@ -25,7 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
       backgroundColor: Colors.black,
       body: Stack(
         children: [
-          Container(
+          SizedBox(
             width: double.infinity,
             height: double.infinity,
             child: Opacity(
@@ -66,3 +89,21 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
+
+Future buildAlertDialog(BuildContext context, String msg) => showDialog(
+      context: context,
+      builder: (BuildContext context) => AlertDialog.adaptive(
+        title: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SvgPicture.asset(
+                AssetsPath.AlertDialogImage,
+                height: 100,
+              ),
+            ),
+          ],
+        ),
+        content: Text(msg),
+      ),
+    );

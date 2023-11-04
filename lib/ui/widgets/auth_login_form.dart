@@ -80,6 +80,12 @@ class _AuthLoginFormState extends State<AuthLoginForm>
     });
   }
 
+  void _submit(){
+    final isvalid = _formKey.currentState?.validate() ?? false;
+    if(!isvalid) return;
+    widget.onSubmit(_authForData);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -140,7 +146,7 @@ class _AuthLoginFormState extends State<AuthLoginForm>
                               child: AnimatedOpacity(
                                 opacity: opacityLevel,
                                 duration: const Duration(milliseconds: 1500),
-                                child: TextFormField(
+                                child: _authForData.isSingUp ? TextFormField(
                                   key: const ValueKey("Name"),
                                   initialValue: _authForData.name,
                                   onChanged: (name) =>
@@ -152,9 +158,12 @@ class _AuthLoginFormState extends State<AuthLoginForm>
                                     if (name.trim().length < 3) {
                                       return 'O nome deve possuir 3 ou mais caracteres';
                                     }
+                                    if(_authForData.islogin){
+                                      return null;
+                                    }
                                     return null;
                                   },
-                                ),
+                                ) : Text(""),
                               ),
                             ),
                           ),
@@ -243,12 +252,7 @@ class _AuthLoginFormState extends State<AuthLoginForm>
                             ),
                           ),
                         ElevatedButton(
-                          onPressed: () {
-                            if (_formKey.currentState!.validate()) {
-                              Navigator.of(context)
-                                  .pushNamed(AppRoute.ForgotPasswordScreen);
-                            }
-                          },
+                          onPressed: _submit,
                           style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.orange[100],
                               shape: const StadiumBorder(),

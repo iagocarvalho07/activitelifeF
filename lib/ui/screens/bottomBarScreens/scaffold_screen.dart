@@ -1,3 +1,4 @@
+import 'package:activitelifef/data/respostiroty_abstract.dart';
 import 'package:activitelifef/ui/screens/bottomBarScreens/homeScreen/home_screen.dart';
 import 'package:activitelifef/ui/screens/bottomBarScreens/profileScreen/profile_screen.dart';
 import 'package:activitelifef/ui/screens/bottomBarScreens/rotinasscreen/rotinas_screen.dart';
@@ -34,6 +35,7 @@ class _ScaffoldScreenState extends State<ScaffoldScreen> {
         actions: [
           IconButton(
             onPressed: () {
+              RepositoryAuthenticatonWithFireBase().Logout();
               Navigator.of(context).pushNamed(AppRoute.LoginScreen);
             },
             icon: const Icon(Icons.exit_to_app),
