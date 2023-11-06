@@ -11,27 +11,13 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  UserModelEntity? userModelEntity;
 
-  Future _getUser() async {
-    userModelEntity = await DataBaseRepositoryAbstract().getUserEntityFromFireBase();
-  }
-  void _updateUser() async {
-    await _getUser();
-    setState(() {});
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _updateUser();
-  }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(userModelEntity?.Username ?? ''),
+        Text("Home Screen"),
       ],
     );
   }

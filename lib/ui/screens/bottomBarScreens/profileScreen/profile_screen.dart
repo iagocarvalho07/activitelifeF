@@ -1,27 +1,46 @@
+import 'package:activitelifef/data/models/user_model_entity.dart';
 import 'package:activitelifef/utilits/navigation_constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class ProfileScreen extends StatelessWidget {
+import '../../../../data/repositorys/database_repository_abstract.dart';
+
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
   @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Profile(context),
+          FutureBuilder(
+            future: DataBaseRepositoryAbstract().getUserEntityFromFireBase(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return profile(context, snapshot.data!);
+              } else if (snapshot.hasError) {
+                return const Text('Erro ao carregar o perfil.');
+              } else {
+                return const Center(child: CircularProgressIndicator());
+              }
+            },
+          ),
         ],
       ),
     );
   }
 }
 
-Widget Profile(BuildContext context) => Card(
+Widget profile(BuildContext context, UserModelEntity userModelEntity) => Card(
       child: Padding(
-        padding: EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -50,17 +69,17 @@ Widget Profile(BuildContext context) => Card(
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
+                const Icon(
                   Icons.person,
                   size: 32,
                 ),
                 Text(
-                  "Iago Carvalho,",
-                  style: TextStyle(fontSize: 24),
+                  userModelEntity.Username,
+                  style: const TextStyle(fontSize: 24),
                 ),
                 Text(
-                  "27",
-                  style: TextStyle(fontSize: 24),
+                  userModelEntity.idade,
+                  style: const TextStyle(fontSize: 24),
                 )
               ],
             ),
@@ -69,9 +88,16 @@ Widget Profile(BuildContext context) => Card(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  buildItensProfile(context, const Icon(Icons.directions_walk), "Ganho de Massa"),
-                  buildItensProfile(context, const Icon(Icons.h_mobiledata_outlined), "peso "),
-                  buildItensProfile(context, const Icon(Icons.calendar_view_week), "Frequencia"),
+                  buildItensProfile(context, const Icon(Icons.directions_walk),
+                      userModelEntity.objetivo),
+                  buildItensProfile(
+                      context,
+                      const Icon(Icons.h_mobiledata_outlined),
+                      userModelEntity.peso),
+                  buildItensProfile(
+                      context,
+                      const Icon(Icons.calendar_view_week),
+                      userModelEntity.frequencia),
                 ],
               ),
             )

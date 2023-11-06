@@ -11,6 +11,7 @@ import 'package:activitelifef/ui/screens/drawer_menu_screens/settings_screeen.da
 import 'package:activitelifef/utilits/navigation_constants.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
