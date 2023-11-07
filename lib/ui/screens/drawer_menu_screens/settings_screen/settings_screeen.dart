@@ -1,6 +1,9 @@
+import 'package:activitelifef/data/models/user_model_entity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../../widgets/drawer_menu.dart';
+import '../../../../data/repositorys/database_repository_abstract.dart';
+import '../../../widgets/drawer_menu.dart';
+import 'bottom_sheet_updat.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -10,6 +13,24 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
+  UserModelEntity? userModelEntity;
+
+  Future _getUser() async {
+    userModelEntity =
+        await DataBaseRepositoryAbstract().getUserEntityFromFireBase();
+  }
+
+  void _updateUser() async {
+    await _getUser();
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _updateUser();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +49,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
               const Text("configurações"),
               const Divider(thickness: 1.0),
-              SettingsChanges(context)
+              if (userModelEntity != null)
+                SettingsChanges(context, userModelEntity!),
+              if (userModelEntity == null) const CircularProgressIndicator(),
             ],
           ),
         ),
@@ -37,48 +60,48 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 }
 
-Widget SettingsChanges(BuildContext context) => Column(
+Widget SettingsChanges(BuildContext context, UserModelEntity user) => Column(
       children: [
         ListTile(
           leading: const Icon(Icons.person_pin),
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [Text("Nome"), Text("UserName")],
+            children: [const Text("Nome"), Text(user.Username)],
           ),
         ),
         ListTile(
-          onTap: () => buildShowModalPerfilBottom(context),
+          onTap: () => buildShowModalPerfilBottom(context, user.idade, 'idade'),
           leading: const Icon(Icons.cake),
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [Text("Idade"), Text("userIdade")],
+            children: [Text("Idade"), Text(user.idade)],
           ),
           trailing: const Icon(Icons.arrow_forward_outlined),
         ),
         ListTile(
-          onTap: () {},
+          onTap: () => buildShowModalPerfilBottom(context, user.genero, 'genero'),
           leading: const Icon(Icons.transgender),
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [Text("Gênero"), Text("UserGender")],
+            children: [Text("Gênero"), Text(user.genero)],
           ),
           trailing: const Icon(Icons.arrow_forward_outlined),
         ),
         ListTile(
-          onTap: () {},
+          onTap: () => buildShowModalPerfilBottom(context, user.altura, 'altura'),
           leading: const Icon(Icons.height),
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [Text("Altura"), Text("UserHeigth")],
+            children: [Text("Altura"), Text(user.altura)],
           ),
           trailing: const Icon(Icons.arrow_forward_outlined),
         ),
         ListTile(
-          onTap: () {},
+          onTap: () => buildShowModalPerfilBottom(context, user.peso, 'peso'),
           leading: const Icon(Icons.line_weight),
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [Text("Peso"), Text("UserPESO")],
+            children: [Text("Peso"), Text(user.peso)],
           ),
           trailing: const Icon(Icons.arrow_forward_outlined),
         ),
@@ -87,7 +110,7 @@ Widget SettingsChanges(BuildContext context) => Column(
           leading: const Icon(Icons.translate),
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [Text("Idioma"), Text("SelectIdioma")],
+            children: [const Text("Idioma"), Text(user.idioma)],
           ),
           trailing: const Icon(Icons.arrow_forward_outlined),
         ),
@@ -96,38 +119,41 @@ Widget SettingsChanges(BuildContext context) => Column(
         ),
         const Text("Configurações de treino"),
         ListTile(
-          onTap: () {},
+          onTap: () => buildShowModalPerfilBottom(context, user.tempoTreino, 'tempoTreino'),
           leading: const Icon(Icons.timer),
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [Text("Tempo de Treino"), Text("45 minutos")],
+            children: [const Text("Tempo de Treino"), Text(user.tempoTreino)],
           ),
           trailing: const Icon(Icons.arrow_forward_outlined),
         ),
         ListTile(
-          onTap: () {},
+          onTap: () => buildShowModalPerfilBottom(context, user.experiencia, 'experiencia'),
           leading: const Icon(Icons.insights),
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [Text("Experiencia"), Text("Avançado")],
+            children: [const Text("Experiencia"), Text(user.experiencia)],
           ),
           trailing: const Icon(Icons.arrow_forward_outlined),
         ),
         ListTile(
-          onTap: () {},
+          onTap: () => buildShowModalPerfilBottom(context, user.frequencia, 'frequencia'),
           leading: const Icon(Icons.timelapse),
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [Text("Frequencia de treinos"), Text("5x/sem")],
+            children: [
+              Text("Frequencia de treinos"),
+              Text("${user.frequencia}x/sem")
+            ],
           ),
           trailing: const Icon(Icons.arrow_forward_outlined),
         ),
         ListTile(
-          onTap: () {},
+          onTap: () => buildShowModalPerfilBottom(context, user.objetivo, 'objetivo'),
           leading: const Icon(Icons.check_circle),
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [Text("Objetivo"), Text("Ganho de massa")],
+            children: [Text("Objetivo"), Text(user.objetivo)],
           ),
           trailing: const Icon(Icons.arrow_forward_outlined),
         ),
@@ -172,19 +198,4 @@ Widget SettingsChanges(BuildContext context) => Column(
       ],
     );
 
-Future buildShowModalPerfilBottom(BuildContext context,) => showModalBottomSheet(
-    showDragHandle: true,
-    context: context,
-    builder: (BuildContext context) => Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: SizedBox(
-            child: Center(
-              child: Column(
-                children: [
-                  Text("data")
 
-                ],
-              ),
-            ),
-          ),
-        ));

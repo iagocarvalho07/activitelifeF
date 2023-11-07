@@ -32,7 +32,7 @@ class UserModelEntity {
       peso: json["peso"],
       idioma: json["idioma"],
       tempoTreino: json["tempoTreino"],
-      experiencia: json["peso"],
+      experiencia: json["experiencia"],
       frequencia: json["frequencia"],
       objetivo: json["objetivo"],
     );

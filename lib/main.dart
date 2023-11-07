@@ -7,7 +7,7 @@ import 'package:activitelifef/ui/screens/bottomBarScreens/scaffold_screen.dart';
 import 'package:activitelifef/ui/screens/drawer_menu_screens/buy_my_coffee.dart';
 import 'package:activitelifef/ui/screens/drawer_menu_screens/my_workout_screen.dart';
 import 'package:activitelifef/ui/screens/drawer_menu_screens/notification_screen.dart';
-import 'package:activitelifef/ui/screens/drawer_menu_screens/settings_screeen.dart';
+import 'package:activitelifef/ui/screens/drawer_menu_screens/settings_screen/settings_screeen.dart';
 import 'package:activitelifef/utilits/navigation_constants.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';

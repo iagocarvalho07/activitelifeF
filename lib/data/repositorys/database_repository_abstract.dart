@@ -4,6 +4,8 @@ import 'package:activitelifef/domain/repositorys/database_repository_implementat
 abstract class DataBaseRepositoryAbstract {
   Future getUserEntityFromFireBase() async {}
 
+  Future UpdateDataUser(String campo, String update) async {}
+
   factory DataBaseRepositoryAbstract() {
     return DataBaseRespositoryImplementation();
   }
